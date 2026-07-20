@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Taxi Fares Are Calculated Around the World | TaxiMeter Pro Blog</title>
+  <meta name="description" content="Learn exactly how taxi fares are calculated globally — base fares, per-km rates, waiting time charges, and surcharges. Know what you're paying before you ride." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.taximeter.online/blog/how-taxi-fares-are-calculated.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚕</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --yellow: #f5c518; --text: #e6edf3; --muted: #8b949e; --radius: 16px; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    nav { background: #0d1117; border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; flex-wrap: wrap; gap: 8px; }
+    nav .nav-brand { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--yellow); font-size: 0.95rem; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; }
+    nav ul li a { color: var(--muted); text-decoration: none; }
+    nav ul li a:hover { color: var(--text); }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; flex: 1; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); text-decoration: none; font-size: 0.85rem; margin-bottom: 32px; }
+    .back-link:hover { color: var(--yellow); }
+    .article-tag { font-size: 0.72rem; color: var(--yellow); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+    h1 { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--text); line-height: 1.25; margin-bottom: 16px; }
+    .article-meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 36px; display: flex; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+    h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--yellow); margin: 36px 0 14px; }
+    p { color: var(--muted); line-height: 1.78; margin-bottom: 16px; font-size: 0.95rem; }
+    p strong { color: var(--text); }
+    .formula-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin: 24px 0; font-family: monospace; font-size: 0.95rem; color: var(--yellow); }
+    .formula-box span { color: var(--muted); font-size: 0.8rem; display: block; margin-top: 8px; font-family: 'DM Sans', sans-serif; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 0.88rem; }
+    th { background: var(--card); color: var(--yellow); font-family: 'Syne', sans-serif; font-size: 0.78rem; letter-spacing: 0.5px; padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); }
+    tr:last-child td { border-bottom: none; }
+    .tip-box { background: #0f2d1a; border: 1px solid #238636; border-radius: var(--radius); padding: 18px 22px; margin: 24px 0; }
+    .tip-box p { color: #3fb950; margin: 0; font-size: 0.9rem; }
+    .cta-inline { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center; margin: 40px 0; }
+    .cta-inline h3 { font-family: 'Syne', sans-serif; color: var(--yellow); margin-bottom: 10px; }
+    .cta-inline p { font-size: 0.88rem; margin-bottom: 16px; }
+    .cta-inline a { display: inline-block; background: var(--yellow); color: #0d1117; font-family: 'Syne', sans-serif; font-weight: 700; padding: 11px 24px; border-radius: 10px; text-decoration: none; }
+    footer { background: var(--card); border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--yellow); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">🚕 TaxiMeter Pro</a>
+  <ul>
+    <li><a href="/">GPS Calculator</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/contact.html">Contact</a></li>
+    <li><a href="/privacy.html">Privacy</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <a class="back-link" href="/blog/">← Back to Blog</a>
+  <div class="article-tag">📊 Fare Guide</div>
+  <h1>How Taxi Fares Are Calculated Around the World</h1>
+  <div class="article-meta">
+    <span>📅 June 2025</span>
+    <span>🕐 8 min read</span>
+    <span>✍️ TaxiMeter Pro Team</span>
+  </div>
+
+  <p>Whether you're hailing a black cab in London, a yellow taxi in New York, a tuk-tuk in Bangkok, or a metered cab in Nairobi — taxi fares are calculated using a surprisingly consistent set of components worldwide. Understanding these components empowers you as a passenger to verify charges, spot manipulation, and make smarter transport decisions.</p>
+
+  <p>This guide breaks down exactly how taxi fares work, globally and locally, so you always know what you're paying for.</p>
+
+  <h2>The Universal Taxi Fare Formula</h2>
+  <p>Almost every metered taxi system in the world uses a variation of the same core formula:</p>
+
+  <div class="formula-box">
+    Total Fare = Base Fare + (Distance Rate × km) + (Time Rate × minutes)
+    <span>Some systems also add surcharges for luggage, night travel, airport pickups, tolls, or public holidays.</span>
+  </div>
+
+  <p>Let's break down each component:</p>
+
+  <h2>1. The Base Fare (Flag Fall)</h2>
+  <p>The <strong>base fare</strong> — sometimes called the "flag fall" — is the amount charged the moment you enter the taxi and the meter starts. It covers the driver's time getting to your pickup location, fuel costs at idle, and a minimum revenue threshold for the driver.</p>
+  <p>Base fares vary enormously by country and city. In Singapore, the flag fall for a standard taxi is around SGD 3.90 (~USD 2.90). In Mumbai, it's around INR 25 (~USD 0.30). In New York City, it's USD 3.00.</p>
+  <p>This single number tells you a lot about the cost of living and driver earnings in that city. A high base fare often means a more regulated, higher-wage taxi market.</p>
+
+  <h2>2. Distance Rate (Per Kilometre or Per Mile)</h2>
+  <p>After the flag fall, the meter ticks for every unit of distance travelled. This is measured in kilometres in most countries, and miles in the United States and United Kingdom.</p>
+  <p>The <strong>per-kilometre rate</strong> is typically calculated by a pulse from the taxi's odometer or GPS, incrementing the meter at regular intervals. A common setup might charge every 100 metres (0.1 km), clicking the meter up by a fixed amount each time.</p>
+
+  <table>
+    <thead>
+      <tr><th>City</th><th>Base Fare</th><th>Per KM Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>New York City, USA</td><td>$3.00</td><td>$2.50/mile (~$1.55/km)</td></tr>
+      <tr><td>London, UK</td><td>£3.80</td><td>~£2.10/km (varies)</td></tr>
+      <tr><td>Tokyo, Japan</td><td>¥500</td><td>¥90 per 237m (~¥379/km)</td></tr>
+      <tr><td>Singapore</td><td>SGD 3.90</td><td>SGD 0.55/400m (~SGD 1.37/km)</td></tr>
+      <tr><td>Colombo, Sri Lanka</td><td>LKR 60</td><td>LKR 60/km</td></tr>
+      <tr><td>Nairobi, Kenya</td><td>KES 100</td><td>~KES 70/km</td></tr>
+    </tbody>
+  </table>
+
+  <p>Note: Rates above are approximate and change periodically. Always verify current rates with local transport authorities or the taxi company.</p>
+
+  <h2>3. Time Rate (Waiting & Traffic)</h2>
+  <p>The time-based component charges you for minutes when the taxi is moving slowly or stopped. This prevents passengers from having "free" time in traffic at the driver's expense.</p>
+  <p>Most systems activate the time rate when speed drops below a threshold — typically 15–20 km/h. When you're stuck in traffic, the meter isn't just measuring distance — it's measuring your time, too.</p>
+  <p>This is why rides in congested cities feel disproportionately expensive. In a 30-minute ride where you spend 15 minutes stuck in traffic, you're paying both the short distance and the full 15 minutes of time charges.</p>
+
+  <div class="tip-box">
+    <p>💡 <strong>Tip:</strong> Use TaxiMeter Pro to see both distance and time costs separately in real time. This makes it easy to spot if a driver is intentionally taking longer routes or sitting idle.</p>
+  </div>
+
+  <h2>4. Surcharges</h2>
+  <p>Beyond the core formula, many cities add surcharges for specific situations:</p>
+  <p><strong>Night surcharges</strong> are common worldwide. In most cities, fares increase by 20–50% between 11pm and 6am. This compensates drivers for unsociable hours and reduced demand.</p>
+  <p><strong>Airport surcharges</strong> apply in many cities when picking up or dropping off at airports. London's Heathrow, for example, has specific pickup fees. New York taxis charge a flat $52 to/from JFK.</p>
+  <p><strong>Toll charges</strong> are typically passed directly to the passenger. If your route crosses a highway toll, bridge, or tunnel, this is added to the final fare.</p>
+  <p><strong>Luggage fees</strong> apply in some countries, particularly in Europe, where extra large bags may attract a small supplement.</p>
+  <p><strong>Public holiday rates</strong> apply in some jurisdictions, adding a percentage premium on days like Christmas, New Year, and national holidays.</p>
+
+  <h2>5. Flat Rate vs. Metered Fares</h2>
+  <p>Not every taxi ride uses a meter. Many airport transfers, inter-city routes, and tourist areas operate on <strong>flat rates</strong> — a fixed price agreed in advance for a specific journey.</p>
+  <p>Flat rates can be good or bad for passengers. A legitimate flat rate saves you the anxiety of watching the meter in traffic. But without transparency, flat rates are also the most common scenario for tourist overcharging.</p>
+  <p>When accepting a flat rate, it helps to know the approximate distance and multiply by local per-km rates. TaxiMeter Pro can help you estimate what a metered fare should be, giving you a reference point before agreeing to a flat price.</p>
+
+  <h2>6. Ride-Hailing vs. Traditional Taxis</h2>
+  <p>Apps like Uber, Bolt, and Grab use the same fundamental formula — base fare + distance + time — but apply it through algorithmic <strong>dynamic pricing</strong>. During peak hours or high demand periods, a multiplier (often called "surge") increases fares by 1.5x, 2x, or even higher.</p>
+  <p>Traditional metered taxis typically have regulated, fixed rates that don't surge. This makes them more predictable, though sometimes slower to find during busy periods.</p>
+
+  <h2>How to Verify Your Fare</h2>
+  <p>The best protection against taxi overcharging is transparency. Here's how to verify any fare:</p>
+  <p><strong>Before the ride:</strong> Ask the driver for the current base fare and per-km rate. In most regulated markets, drivers are legally required to display rates.</p>
+  <p><strong>During the ride:</strong> Use TaxiMeter Pro on your smartphone to track distance, time, and calculate the expected fare using the rates you were quoted.</p>
+  <p><strong>After the ride:</strong> Compare the meter total with your TaxiMeter Pro receipt. Significant differences warrant a polite inquiry or a formal complaint with the local taxi authority.</p>
+
+  <div class="cta-inline">
+    <h3>Try It on Your Next Ride</h3>
+    <p>Open TaxiMeter Pro, enter your local fare rates, and track your ride in real time — for free.</p>
+    <a href="/">Launch TaxiMeter Pro 🚕</a>
+  </div>
+
+  <h2>Conclusion</h2>
+  <p>Taxi fares follow a logical structure that is remarkably consistent across the world: a base fare to get started, a per-km rate for distance, a time rate for slow traffic, and various surcharges for circumstances. The variables change by city and operator — but the formula stays the same.</p>
+  <p>Understanding this formula means you're never at a disadvantage as a passenger. With the right knowledge — and the right tools — you can always verify what you're paying and why.</p>
+
+</div>
+
+<footer>
+  © 2025 TaxiMeter Pro · <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/about.html">About</a> · <a href="/privacy.html">Privacy Policy</a> · <a href="/contact.html">Contact</a>
+</footer>
+
+</body>
+</html>

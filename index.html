@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaxiMeter Pro – Free Online GPS Fare Calculator</title>
+  <meta name="description" content="Free online taximeter with live GPS tracking on OpenStreetMap. Calculate taxi fare in real-time based on distance and time. No app needed – works in your browser!" />
+  <meta name="keywords" content="taximeter, taxi meter, fare calculator, GPS taxi, live location taxi, online taximeter, taxi fare calculator" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.taximeterpro.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="TaxiMeter Pro – Live GPS Fare Calculator" />
+  <meta property="og:description" content="Track your taxi ride and calculate fare in real time using your GPS location and OpenStreetMap." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.taximeterpro.com/" />
+
+  <!-- Favicon (SVG inline via data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚕</text></svg>" />
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TaxiMeter Pro",
+    "url": "https://www.taximeterpro.com/",
+    "description": "Free online taximeter with live GPS tracking. Calculate taxi fare in real-time based on distance and time. Works on any browser, no app required.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "TaxiMeter Pro"
+    }
+  }
+  </script>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <!-- Leaflet JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --yellow: #f5c518;
+      --yellow-dim: #c49a0e;
+      --green: #3fb950;
+      --red: #f85149;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: #0d1117;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    nav .nav-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      color: var(--yellow);
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav ul li a:hover { color: var(--text); }
+
+    /* ── HEADER ── */
+    header {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .logo {
+      width: 40px; height: 40px;
+      background: var(--yellow);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+
+    header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--yellow);
+      letter-spacing: -0.5px;
+    }
+
+    header span {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-left: 4px;
+      font-weight: 300;
+    }
+
+    .status-pill {
+      margin-left: auto;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      background: #21262d;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .status-pill .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+      transition: background 0.3s;
+    }
+
+    .status-pill.running .dot { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .status-pill.running { color: var(--green); border-color: #238636; }
+
+    /* ── MAIN APP AREA ── */
+    main {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 0;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* LEFT PANEL */
+    .panel {
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    .fare-display {
+      background: linear-gradient(135deg, #1a1d23, #21262d);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fare-display::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: -40px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(245,197,24,0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .fare-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .fare-amount {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: var(--yellow);
+      line-height: 1;
+      transition: color 0.3s;
+    }
+
+    .fare-amount.pulse { animation: fareflash 0.3s ease; }
+
+    @keyframes fareflash {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .fare-currency { font-size: 1.4rem; vertical-align: super; margin-right: 4px; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stat-card {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .stat-card .s-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .stat-card .s-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stat-card .s-unit { font-size: 0.75rem; color: var(--muted); margin-left: 3px; }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      gap: 10px;
+    }
+
+    .setting-row label { font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+
+    .setting-row input[type="number"] {
+      background: #21262d;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 10px;
+      width: 90px;
+      font-size: 0.9rem;
+      text-align: right;
+      outline: none;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .setting-row input[type="number"]:focus { border-color: var(--yellow-dim); }
+
+    .btn-row { display: flex; gap: 10px; }
+
+    .btn {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.5px;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-start {
+      background: var(--yellow);
+      color: #0d1117;
+      box-shadow: 0 4px 20px rgba(245,197,24,0.3);
+    }
+
+    .btn-start:hover { box-shadow: 0 4px 28px rgba(245,197,24,0.5); }
+    .btn-start:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-stop {
+      background: transparent;
+      color: var(--red);
+      border: 1px solid var(--red);
+    }
+
+    .btn-stop:hover { background: rgba(248,81,73,0.1); }
+    .btn-stop:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .btn-reset {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      flex: 0 0 auto;
+      padding: 14px 16px;
+    }
+
+    .btn-reset:hover { color: var(--text); border-color: var(--text); }
+
+    .receipt {
+      background: #0d1117;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: none;
+      font-size: 0.83rem;
+    }
+
+    .receipt.show { display: block; }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid #21262d;
+      color: var(--muted);
+    }
+
+    .receipt-row:last-child { border-bottom: none; font-weight: 700; color: var(--yellow); font-size: 1rem; }
+
+    /* MAP */
+    #map { flex: 1; height: 100%; min-height: 400px; }
+    .leaflet-container { background: #0d1117; }
+
+    .gps-bar { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .gps-chip {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      flex: 1;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .gps-chip span {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .map-badge {
+      position: absolute;
+      top: 16px; right: 16px;
+      z-index: 1000;
+      background: rgba(13,17,23,0.9);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      backdrop-filter: blur(8px);
+      pointer-events: none;
+    }
+
+    .map-badge strong {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      color: var(--yellow);
+    }
+
+    @keyframes ripple {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    .ripple-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(245,197,24,0.6);
+      border: 2px solid var(--yellow);
+      animation: ripple 1.5s infinite;
+    }
+
+    /* ── INFO SECTIONS ── */
+    .info-section {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 48px 24px;
+    }
+
+    .info-section .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .info-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--yellow);
+      margin-bottom: 16px;
+    }
+
+    .info-section h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+
+    .info-section p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .info-section ul {
+      list-style: disc;
+      padding-left: 22px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .info-section ul li { margin-bottom: 6px; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .info-card {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .info-card .ic-icon { font-size: 2rem; margin-bottom: 10px; }
+
+    .info-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .info-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── PRIVACY POLICY ── */
+    #privacy { background: #0d1117; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-col p, .footer-col a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+      text-decoration: none;
+      display: block;
+    }
+
+    .footer-col a:hover { color: var(--yellow); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding: 14px 24px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      main { grid-template-columns: 1fr; }
+      #map { height: 320px; }
+      .panel { border-right: none; border-bottom: 1px solid var(--border); }
+      .footer-inner { grid-template-columns: 1fr; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── SITE NAVIGATION ── -->
+<nav>
+  <a class="nav-brand" href="/">🚕 TaxiMeter Pro</a>
+  <ul>
+    <li><a href="#app">Calculator</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/privacy.html">Privacy</a></li>
+    <li><a href="/contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HEADER ── -->
+<header id="top">
+  <div class="logo">🚕</div>
+  <div>
+    <h1>TaxiMeter Pro <span>GPS Fare Calculator</span></h1>
+  </div>
+  <div class="status-pill" id="statusPill">
+    <div class="dot"></div>
+    <span id="statusText">Idle</span>
+  </div>
+</header>
+
+<!-- ── APP ── -->
+<main id="app">
+  <!-- LEFT PANEL -->
+  <div class="panel">
+
+    <!-- Fare -->
+    <div class="fare-display">
+      <div class="fare-label">Total Fare</div>
+      <div class="fare-amount" id="fareDisplay">
+        <span class="fare-currency">$</span><span id="fareValue">0.00</span>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="s-label">⏱ Time</div>
+        <div class="s-value" id="timeDisplay">00:00<span class="s-unit">s</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="s-label">📍 Distance</div>
+        <div class="s-value" id="distDisplay">0.00<span class="s-unit">km</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="s-label">🚀 Speed</div>
+        <div class="s-value" id="speedDisplay">0<span class="s-unit">km/h</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="s-label">📡 Accuracy</div>
+        <div class="s-value" id="accDisplay">--<span class="s-unit">m</span></div>
+      </div>
+    </div>
+
+    <!-- GPS Coords -->
+    <div>
+      <div class="section-title">📌 Live Position</div>
+      <div class="gps-bar" style="margin-top:8px">
+        <div class="gps-chip">Lat <span id="latDisplay">--</span></div>
+        <div class="gps-chip">Lng <span id="lngDisplay">--</span></div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div>
+      <div class="section-title">⚙️ Fare Settings</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <div class="setting-row">
+          <label for="baseFare">Base Fare ($)</label>
+          <input type="number" id="baseFare" value="2.50" min="0" step="0.10" />
+        </div>
+        <div class="setting-row">
+          <label for="perKm">Per km ($)</label>
+          <input type="number" id="perKm" value="1.50" min="0" step="0.10" />
+        </div>
+        <div class="setting-row">
+          <label for="perMin">Per minute ($)</label>
+          <input type="number" id="perMin" value="0.30" min="0" step="0.05" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-row">
+      <button class="btn btn-start" id="btnStart" onclick="startRide()">▶ Start Ride</button>
+      <button class="btn btn-stop" id="btnStop" onclick="stopRide()" disabled>■ Stop</button>
+      <button class="btn btn-reset" id="btnReset" onclick="resetRide()" title="Reset">↺</button>
+    </div>
+
+    <!-- Receipt -->
+    <div class="receipt" id="receipt">
+      <div class="section-title" style="margin-bottom:10px">🧾 Ride Receipt</div>
+      <div class="receipt-row"><span>Base Fare</span><span id="recBase">$0.00</span></div>
+      <div class="receipt-row"><span>Distance Charge</span><span id="recDist">$0.00</span></div>
+      <div class="receipt-row"><span>Time Charge</span><span id="recTime">$0.00</span></div>
+      <div class="receipt-row"><span>Duration</span><span id="recDuration">0:00</span></div>
+      <div class="receipt-row"><span>Distance</span><span id="recKm">0.00 km</span></div>
+      <div class="receipt-row"><span>TOTAL</span><span id="recTotal">$0.00</span></div>
+    </div>
+
+  </div>
+
+  <!-- MAP -->
+  <div style="position:relative;flex:1">
+    <div id="map"></div>
+    <div class="map-badge">
+      <strong id="badgeFare">$0.00</strong>
+      Live Fare
+    </div>
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════════
+     HOW IT WORKS SECTION
+══════════════════════════════════════════════════════════ -->
+<section class="info-section" id="how-it-works">
+  <div class="container">
+    <h2>How TaxiMeter Pro Works</h2>
+    <p>
+      TaxiMeter Pro is a free, browser-based GPS taxi fare calculator that uses your device's built-in location services to track your journey in real time. There is no app to download and no account required — simply open the page, set your fare rates, and press <strong>Start Ride</strong>.
+    </p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="ic-icon">📍</div>
+        <h3>Live GPS Tracking</h3>
+        <p>Your browser's Geolocation API provides real-time position updates. TaxiMeter Pro uses the Haversine formula to calculate the exact distance traveled between each GPS fix, filtering out noise from GPS jitter under 5 meters.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🗺️</div>
+        <h3>Interactive Map</h3>
+        <p>The map is powered by OpenStreetMap and the Leaflet.js library. Your route is drawn on the map as a live polyline so you can see exactly where you have traveled throughout the ride.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">💰</div>
+        <h3>Customizable Fare Formula</h3>
+        <p>Set your own base fare, per-kilometer rate, and per-minute rate. The fare is recalculated every second and displayed in large, easy-to-read digits both on the panel and on the live map badge.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🧾</div>
+        <h3>Instant Ride Receipt</h3>
+        <p>When you stop the ride, a full breakdown receipt is generated showing the base fare, distance charge, time charge, total distance traveled, and total fare — all in one place.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🔒</div>
+        <h3>Privacy First</h3>
+        <p>All GPS data is processed locally in your browser. Your location is never sent to any server, stored in any database, or shared with any third party. The map tiles are fetched directly from OpenStreetMap's servers.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">📱</div>
+        <h3>Works on Any Device</h3>
+        <p>TaxiMeter Pro is fully responsive and works on smartphones, tablets, and desktops. Any modern browser with GPS support — Chrome, Firefox, Safari, or Edge — is supported out of the box.</p>
+      </div>
+    </div>
+
+    <h3>Step-by-Step Guide</h3>
+    <ul>
+      <li><strong>Step 1 – Set your fare rates:</strong> Enter the base fare, price per kilometer, and price per minute in the Fare Settings panel on the left. These values match your local taxi tariff.</li>
+      <li><strong>Step 2 – Allow location access:</strong> When prompted by your browser, click "Allow" to grant the page access to your GPS signal.</li>
+      <li><strong>Step 3 – Press Start Ride:</strong> The meter begins immediately. Distance and time accumulate, and the fare updates every second.</li>
+      <li><strong>Step 4 – Press Stop:</strong> When the trip ends, press Stop. A full receipt is displayed with a line-by-line breakdown of your fare.</li>
+      <li><strong>Step 5 – Reset for the next ride:</strong> Press the Reset (↺) button to clear all data and prepare for a new passenger.</li>
+    </ul>
+
+    <h3>The Fare Calculation Formula</h3>
+    <p>
+      The fare is calculated using a standard taxi metering formula:<br />
+      <strong>Total Fare = Base Fare + (Distance in km × Rate per km) + (Duration in minutes × Rate per minute)</strong>
+    </p>
+    <p>
+      This formula mirrors the metering logic used by most licensed taxi companies worldwide, making TaxiMeter Pro suitable for drivers, passengers, and fleet operators who need a transparent, verifiable fare reference.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     ABOUT SECTION
+══════════════════════════════════════════════════════════ -->
+<section class="info-section" id="about" style="background:#0d1117;">
+  <div class="container">
+    <h2>About TaxiMeter Pro</h2>
+    <p>
+      TaxiMeter Pro was built to give passengers, independent drivers, and small taxi operators a free, reliable, and transparent fare calculation tool that works without any subscription, registration, or app installation.
+    </p>
+    <p>
+      Taxi and rideshare passengers often wonder whether the fare on the meter matches the actual distance traveled. TaxiMeter Pro solves this problem by giving passengers an independent, GPS-verified fare reading on their own device, calculated in real time using the same mathematical model used by professional taxi meters.
+    </p>
+    <p>
+      Taxi drivers and operators can use TaxiMeter Pro as a backup meter, a training tool for new drivers, or a simple way to provide a digital receipt to passengers. The customizable fare settings allow drivers to input their local regulatory tariff so the numbers exactly match the official meter.
+    </p>
+
+    <h3>Technology Used</h3>
+    <ul>
+      <li><strong>OpenStreetMap</strong> – Free, open-source map data contributed by volunteers worldwide.</li>
+      <li><strong>Leaflet.js</strong> – A lightweight open-source JavaScript library for interactive maps.</li>
+      <li><strong>HTML5 Geolocation API</strong> – Built into all modern browsers; no plugin required.</li>
+      <li><strong>Haversine Formula</strong> – A trigonometric formula used to calculate the great-circle distance between two GPS coordinates.</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <h3>Is TaxiMeter Pro free?</h3>
+    <p>Yes. TaxiMeter Pro is completely free to use. There are no subscriptions, no in-app purchases, and no premium tiers.</p>
+
+    <h3>Does TaxiMeter Pro store my location?</h3>
+    <p>No. GPS data is processed entirely inside your browser and is never transmitted to any server. When you close the tab, all data is discarded.</p>
+
+    <h3>How accurate is the GPS distance measurement?</h3>
+    <p>Accuracy depends on your device's GPS hardware and signal quality. TaxiMeter Pro filters out GPS position jumps smaller than 5 meters to reduce the effect of GPS noise. In open-sky conditions with a modern smartphone, accuracy is typically within 5–10 meters.</p>
+
+    <h3>Can I use it on an iPhone?</h3>
+    <p>Yes. TaxiMeter Pro works on Safari on iOS. Make sure location access is enabled for your browser in your iPhone's Settings app under Privacy &amp; Security → Location Services.</p>
+
+    <h3>What currency does TaxiMeter Pro use?</h3>
+    <p>The fare is displayed in whatever currency you enter in the settings. The dollar sign ($) is used as a generic symbol — you can treat it as representing your local currency (rupee, euro, pound, etc.).</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     PRIVACY POLICY
+══════════════════════════════════════════════════════════ -->
+<section class="info-section" id="privacy">
+  <div class="container">
+    <h2>Privacy Policy</h2>
+    <p><em>Last updated: March 2025</em></p>
+
+    <p>
+      TaxiMeter Pro ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains how we handle information when you use our website at taximeterpro.com (the "Service").
+    </p>
+
+    <h3>Information We Do Not Collect</h3>
+    <p>
+      TaxiMeter Pro does not collect, store, or transmit your GPS location data. All geolocation data requested by the app is processed locally in your browser and is discarded when you close or reload the page. We have no access to your location at any time.
+    </p>
+
+    <h3>Information We May Collect Automatically</h3>
+    <p>
+      Like most websites, our server may automatically log standard technical information when you visit, including your IP address, browser type, operating system, the pages you visit, and the time and date of your visit. This information is used solely for website security, performance monitoring, and aggregate analytics. It is not linked to any personally identifiable information.
+    </p>
+
+    <h3>Cookies</h3>
+    <p>
+      TaxiMeter Pro itself does not set any cookies. However, third-party services embedded in this website — including OpenStreetMap tile servers — may set cookies on your device according to their own privacy policies. We recommend reviewing:
+    </p>
+    <ul>
+      <li><a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer" style="color:var(--yellow)">OpenStreetMap Privacy Policy</a></li>
+    </ul>
+
+    <h3>Third-Party Links</h3>
+    <p>
+      Our website may contain links to external websites. We are not responsible for the privacy practices or content of those sites. We encourage you to read the privacy policy of any external site you visit.
+    </p>
+
+    <h3>Children's Privacy</h3>
+    <p>
+      TaxiMeter Pro is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information to us, please contact us immediately.
+    </p>
+
+    <h3>Changes to This Policy</h3>
+    <p>
+      We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date. Continued use of the Service after any changes constitutes your acceptance of the updated policy.
+    </p>
+
+    <h3 id="contact">Contact Us</h3>
+    <p>
+      If you have any questions about this Privacy Policy or about TaxiMeter Pro, please contact us at:<br />
+      <strong>Email:</strong> <a href="mailto:hello@taximeterpro.com" style="color:var(--yellow)">hello@taximeterpro.com</a>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>🚕 TaxiMeter Pro</h4>
+      <p>Free, browser-based GPS taxi fare calculator. No app required. Your location never leaves your device.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="#app">GPS Fare Calculator</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="/blog/">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/privacy.html">Cookie Policy</a>
+      <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Map Data © OpenStreetMap</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 TaxiMeter Pro. All rights reserved. &nbsp;·&nbsp; Powered by OpenStreetMap &amp; Leaflet &nbsp;·&nbsp; GPS data stays on your device.
+  </div>
+</footer>
+
+<script>
+  // ── State ──────────────────────────────────────────────────────────────
+  let map, marker, routeLine, accuracyCircle;
+  let watchId = null;
+  let running = false;
+  let startTime = null;
+  let timerInterval = null;
+  let totalDistance = 0; // km
+  let lastPos = null;
+  let routePoints = [];
+  let elapsedSeconds = 0;
+
+  // ── Map Init ───────────────────────────────────────────────────────────
+  map = L.map('map', { zoomControl: true }).setView([7.2906, 80.6337], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19
+  }).addTo(map);
+
+  const taxiIcon = L.divIcon({
+    html: `<div style="font-size:28px;filter:drop-shadow(0 2px 6px rgba(245,197,24,0.8));animation:bounce 1s infinite alternate;">🚕</div>`,
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
+    className: ''
+  });
+
+  // ── Helpers ────────────────────────────────────────────────────────────
+  function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2)**2 +
+              Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  function calcFare(distKm, seconds) {
+    const base = parseFloat(document.getElementById('baseFare').value) || 0;
+    const pkm  = parseFloat(document.getElementById('perKm').value)  || 0;
+    const pmin = parseFloat(document.getElementById('perMin').value) || 0;
+    return base + (distKm * pkm) + ((seconds / 60) * pmin);
+  }
+
+  function fmt(n) { return n.toFixed(2); }
+
+  function fmtTime(s) {
+    const m = Math.floor(s / 60), sec = s % 60;
+    return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  }
+
+  function updateUI() {
+    const fare = calcFare(totalDistance, elapsedSeconds);
+    document.getElementById('fareValue').textContent = fmt(fare);
+    document.getElementById('badgeFare').textContent = '$' + fmt(fare);
+    document.getElementById('distDisplay').innerHTML = fmt(totalDistance) + '<span class="s-unit">km</span>';
+    document.getElementById('timeDisplay').innerHTML = fmtTime(elapsedSeconds) + '<span class="s-unit"></span>';
+    const el = document.getElementById('fareDisplay');
+    el.classList.remove('pulse');
+    void el.offsetWidth;
+    el.classList.add('pulse');
+  }
+
+  // ── Start ──────────────────────────────────────────────────────────────
+  function startRide() {
+    if (!navigator.geolocation) {
+      alert('❌ Geolocation is not supported by your browser.');
+      return;
+    }
+    running = true;
+    startTime = Date.now();
+    totalDistance = 0;
+    lastPos = null;
+    routePoints = [];
+    elapsedSeconds = 0;
+    if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+    document.getElementById('btnStart').disabled = true;
+    document.getElementById('btnStop').disabled = false;
+    document.getElementById('receipt').classList.remove('show');
+    const pill = document.getElementById('statusPill');
+    pill.classList.add('running');
+    document.getElementById('statusText').textContent = 'Running';
+    timerInterval = setInterval(() => { elapsedSeconds++; updateUI(); }, 1000);
+    watchId = navigator.geolocation.watchPosition(onPosition, onError, {
+      enableHighAccuracy: true,
+      maximumAge: 2000,
+      timeout: 10000
+    });
+  }
+
+  // ── GPS position callback ──────────────────────────────────────────────
+  function onPosition(pos) {
+    const { latitude: lat, longitude: lng, accuracy, speed } = pos.coords;
+    document.getElementById('latDisplay').textContent = lat.toFixed(5);
+    document.getElementById('lngDisplay').textContent = lng.toFixed(5);
+    document.getElementById('accDisplay').innerHTML = Math.round(accuracy) + '<span class="s-unit">m</span>';
+    const kmh = speed ? Math.round(speed * 3.6) : 0;
+    document.getElementById('speedDisplay').innerHTML = kmh + '<span class="s-unit">km/h</span>';
+    if (running && lastPos) {
+      const d = haversine(lastPos.lat, lastPos.lng, lat, lng);
+      if (d > 0.005) totalDistance += d;
+    }
+    lastPos = { lat, lng };
+    const latlng = [lat, lng];
+    routePoints.push(latlng);
+    if (!marker) {
+      marker = L.marker(latlng, { icon: taxiIcon }).addTo(map);
+    } else {
+      marker.setLatLng(latlng);
+    }
+    if (!accuracyCircle) {
+      accuracyCircle = L.circle(latlng, { radius: accuracy, color: '#f5c518', fillColor: '#f5c518', fillOpacity: 0.06, weight: 1 }).addTo(map);
+    } else {
+      accuracyCircle.setLatLng(latlng).setRadius(accuracy);
+    }
+    if (routePoints.length > 1) {
+      if (routeLine) map.removeLayer(routeLine);
+      routeLine = L.polyline(routePoints, { color: '#f5c518', weight: 4, opacity: 0.8, dashArray: running ? null : '6,8' }).addTo(map);
+    }
+    map.setView(latlng, Math.max(map.getZoom(), 16));
+  }
+
+  function onError(err) {
+    console.warn('GPS error:', err.message);
+    document.getElementById('accDisplay').innerHTML = '⚠️';
+  }
+
+  // ── Stop ───────────────────────────────────────────────────────────────
+  function stopRide() {
+    running = false;
+    clearInterval(timerInterval);
+    if (watchId !== null) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+    document.getElementById('btnStart').disabled = false;
+    document.getElementById('btnStop').disabled = true;
+    document.getElementById('statusPill').classList.remove('running');
+    document.getElementById('statusText').textContent = 'Stopped';
+    const base = parseFloat(document.getElementById('baseFare').value) || 0;
+    const pkm  = parseFloat(document.getElementById('perKm').value) || 0;
+    const pmin = parseFloat(document.getElementById('perMin').value) || 0;
+    const distCharge = totalDistance * pkm;
+    const timeCharge = (elapsedSeconds / 60) * pmin;
+    const total = base + distCharge + timeCharge;
+    document.getElementById('recBase').textContent = '$' + fmt(base);
+    document.getElementById('recDist').textContent = '$' + fmt(distCharge);
+    document.getElementById('recTime').textContent = '$' + fmt(timeCharge);
+    document.getElementById('recDuration').textContent = fmtTime(elapsedSeconds);
+    document.getElementById('recKm').textContent = fmt(totalDistance) + ' km';
+    document.getElementById('recTotal').textContent = '$' + fmt(total);
+    document.getElementById('receipt').classList.add('show');
+  }
+
+  // ── Reset ──────────────────────────────────────────────────────────────
+  function resetRide() {
+    stopRide();
+    totalDistance = 0; elapsedSeconds = 0; lastPos = null; routePoints = [];
+    if (marker) { map.removeLayer(marker); marker = null; }
+    if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+    if (accuracyCircle) { map.removeLayer(accuracyCircle); accuracyCircle = null; }
+    document.getElementById('fareValue').textContent = '0.00';
+    document.getElementById('badgeFare').textContent = '$0.00';
+    document.getElementById('distDisplay').innerHTML = '0.00<span class="s-unit">km</span>';
+    document.getElementById('timeDisplay').innerHTML = '00:00';
+    document.getElementById('speedDisplay').innerHTML = '0<span class="s-unit">km/h</span>';
+    document.getElementById('accDisplay').innerHTML = '--<span class="s-unit">m</span>';
+    document.getElementById('latDisplay').textContent = '--';
+    document.getElementById('lngDisplay').textContent = '--';
+    document.getElementById('statusText').textContent = 'Idle';
+    document.getElementById('receipt').classList.remove('show');
+    document.getElementById('btnStart').disabled = false;
+    document.getElementById('btnStop').disabled = true;
+  }
+
+  // Bounce animation
+  const style = document.createElement('style');
+  style.textContent = `@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }`;
+  document.head.appendChild(style);
+
+  // Initial position
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(p => {
+      map.setView([p.coords.latitude, p.coords.longitude], 15);
+      L.circleMarker([p.coords.latitude, p.coords.longitude], {
+        radius: 8, color: '#f5c518', fillColor: '#f5c518', fillOpacity: 0.3, weight: 2
+      }).addTo(map).bindPopup('Your starting area').openPopup();
+    }, () => {}, { timeout: 5000 });
+  }
+</script>
+
+</body>
+</html>

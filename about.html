@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About TaxiMeter Pro – Free GPS Taxi Fare Calculator</title>
+  <meta name="description" content="Learn about TaxiMeter Pro — the free, browser-based GPS taxi fare calculator built for passengers worldwide. No app required, no data collected." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.taximeter.online/about.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚕</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d1117; --card: #161b22; --border: #30363d;
+      --yellow: #f5c518; --yellow-dim: #c49a0e;
+      --green: #3fb950; --text: #e6edf3; --muted: #8b949e; --radius: 16px;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    nav { background: #0d1117; border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; flex-wrap: wrap; gap: 8px; }
+    nav .nav-brand { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--yellow); font-size: 0.95rem; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; }
+    nav ul li a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav ul li a:hover, nav ul li a.active { color: var(--text); }
+
+    .page-hero { background: var(--card); border-bottom: 1px solid var(--border); padding: 48px 24px 40px; text-align: center; }
+    .page-hero .icon { font-size: 48px; margin-bottom: 16px; }
+    .page-hero h1 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--yellow); margin-bottom: 10px; }
+    .page-hero p { color: var(--muted); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 48px 24px; flex: 1; }
+
+    .section { margin-bottom: 48px; }
+    .section h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--yellow); margin-bottom: 16px; }
+    .section p { color: var(--muted); line-height: 1.75; margin-bottom: 14px; font-size: 0.95rem; }
+    .section p strong { color: var(--text); }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; }
+    .stat-card .stat-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--yellow); }
+    .stat-card .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+    .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    @media (max-width: 600px) { .feature-list { grid-template-columns: 1fr; } }
+    .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+    .feature-card .f-icon { font-size: 24px; margin-bottom: 10px; }
+    .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .feature-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    .timeline { border-left: 2px solid var(--border); padding-left: 24px; margin-top: 16px; }
+    .timeline-item { margin-bottom: 28px; position: relative; }
+    .timeline-item::before { content: ''; position: absolute; left: -31px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--yellow); border: 2px solid var(--bg); }
+    .timeline-item .t-year { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--yellow); margin-bottom: 4px; }
+    .timeline-item p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    .cta-box { background: linear-gradient(135deg, #1a1d23, #21262d); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; text-align: center; margin-top: 48px; }
+    .cta-box h2 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--yellow); margin-bottom: 12px; }
+    .cta-box p { color: var(--muted); margin-bottom: 20px; font-size: 0.9rem; }
+    .cta-box a { display: inline-block; background: var(--yellow); color: #0d1117; font-family: 'Syne', sans-serif; font-weight: 700; padding: 12px 28px; border-radius: 10px; text-decoration: none; transition: background 0.2s; }
+    .cta-box a:hover { background: var(--yellow-dim); }
+
+    footer { background: var(--card); border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--yellow); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">🚕 TaxiMeter Pro</a>
+  <ul>
+    <li><a href="/">GPS Calculator</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/about.html" class="active">About</a></li>
+    <li><a href="/contact.html">Contact</a></li>
+    <li><a href="/privacy.html">Privacy</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="icon">🚕</div>
+  <h1>About TaxiMeter Pro</h1>
+  <p>A free, privacy-first GPS taxi fare calculator built for passengers everywhere — no app, no account, no data collection required.</p>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <h2>Our Mission</h2>
+    <p>TaxiMeter Pro was created with a simple goal: <strong>give every passenger the power to verify their taxi fare in real time</strong>, using nothing more than a smartphone and a browser.</p>
+    <p>In many cities around the world, taxi passengers are vulnerable to fare manipulation — broken meters, unofficial routes, or inflated charges. We built TaxiMeter Pro to be a transparent, independent tool that any passenger can open on any device, in any country, and immediately start tracking their ride.</p>
+    <p>We believe access to fare transparency should be free. That's why TaxiMeter Pro will always be free to use.</p>
+  </div>
+
+  <div class="section">
+    <h2>TaxiMeter Pro by the Numbers</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Countries with active users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Bytes of location data stored</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Free, forever</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Any</div>
+        <div class="stat-label">Browser or device supported</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Fare components (base, km, time)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Available, no login needed</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>What Makes Us Different</h2>
+    <div class="feature-list">
+      <div class="feature-card">
+        <div class="f-icon">🔒</div>
+        <h3>Privacy First</h3>
+        <p>Your GPS location is processed entirely in your browser. We never transmit, log, or sell your location data. Not now, not ever.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">📱</div>
+        <h3>No App Required</h3>
+        <p>Works directly in your mobile or desktop browser. No installation, no account, no permissions beyond GPS access.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">🗺️</div>
+        <h3>Live GPS Tracking</h3>
+        <p>Uses your device's GPS and OpenStreetMap to display your real-time position and route as your journey progresses.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">⚙️</div>
+        <h3>Fully Customizable Fares</h3>
+        <p>Enter your local base fare, per-km rate, and per-minute rate. Works for any city, any currency, any taxi operator.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">🧾</div>
+        <h3>Instant Receipt</h3>
+        <p>At the end of every ride, get a full breakdown of your fare: base charge, distance charge, and time charge.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">🌐</div>
+        <h3>Works Everywhere</h3>
+        <p>Whether you're in Colombo, London, Tokyo, or Lagos — TaxiMeter Pro works the same. Just open, set rates, and ride.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Our Story</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-year">The Problem</div>
+        <p>Taxi passengers worldwide often have no way to independently verify whether a meter reading is accurate. In many developing countries, meters are tampered with or simply absent, leaving passengers at the mercy of drivers.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-year">The Idea</div>
+        <p>We asked: what if any passenger could open a webpage and start a fair, GPS-based meter on their own phone? No app to install, no account to create — just open and go.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-year">The Build</div>
+        <p>Using the browser's native Geolocation API and OpenStreetMap's open mapping data, we built a lightweight fare calculator that runs entirely client-side. All fare logic, GPS tracking, and route drawing happens in your browser.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-year">Today</div>
+        <p>TaxiMeter Pro is used daily by passengers across 50+ countries. We continue to improve accuracy, add features, and listen to feedback from our global community of users.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Technology</h2>
+    <p>TaxiMeter Pro is built with pure HTML, CSS, and JavaScript — no frameworks, no heavy libraries, no unnecessary complexity. We use:</p>
+    <p><strong>Leaflet.js</strong> — an open-source JavaScript library for interactive maps, paired with OpenStreetMap tile data.</p>
+    <p><strong>Browser Geolocation API</strong> — the W3C-standard API built into every modern browser for accessing GPS coordinates with user permission.</p>
+    <p><strong>Haversine Formula</strong> — the mathematical formula used to calculate the great-circle distance between two GPS coordinates on Earth's surface.</p>
+    <p>This combination means TaxiMeter Pro loads fast, runs anywhere, and never needs to send your data to a server.</p>
+  </div>
+
+  <div class="cta-box">
+    <h2>Ready to Track Your Next Ride?</h2>
+    <p>Open TaxiMeter Pro, set your local fare rates, and never overpay for a taxi again.</p>
+    <a href="/">Launch TaxiMeter Pro 🚕</a>
+  </div>
+
+</div>
+
+<footer>
+  © 2025 TaxiMeter Pro · <a href="/">Home</a> · <a href="/about.html">About</a> · <a href="/privacy.html">Privacy Policy</a> · <a href="/contact.html">Contact</a>
+  <br/><br/>Powered by OpenStreetMap &amp; Leaflet · GPS data stays on your device.
+</footer>
+
+</body>
+</html>

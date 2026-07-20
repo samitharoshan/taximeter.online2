@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us – TaxiMeter Pro</title>
+  <meta name="description" content="Get in touch with the TaxiMeter Pro team. We'd love to hear your feedback, questions, or partnership inquiries." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.taximeter.online/contact.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚕</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d1117; --card: #161b22; --border: #30363d;
+      --yellow: #f5c518; --yellow-dim: #c49a0e;
+      --green: #3fb950; --text: #e6edf3; --muted: #8b949e; --radius: 16px;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    nav { background: #0d1117; border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; flex-wrap: wrap; gap: 8px; }
+    nav .nav-brand { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--yellow); font-size: 0.95rem; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; }
+    nav ul li a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav ul li a:hover, nav ul li a.active { color: var(--text); }
+
+    .page-hero { background: var(--card); border-bottom: 1px solid var(--border); padding: 48px 24px 40px; text-align: center; }
+    .page-hero .icon { font-size: 48px; margin-bottom: 16px; }
+    .page-hero h1 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--yellow); margin-bottom: 10px; }
+    .page-hero p { color: var(--muted); max-width: 500px; margin: 0 auto; line-height: 1.6; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 48px 24px; flex: 1; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    @media (max-width: 680px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    .contact-form { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; }
+    .contact-form h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--yellow); margin-bottom: 24px; }
+
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.5px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; background: #0d1117; border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--yellow); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-group select option { background: #161b22; }
+
+    .btn-submit { width: 100%; background: var(--yellow); color: #0d1117; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; border: none; border-radius: 10px; padding: 14px; cursor: pointer; transition: background 0.2s; }
+    .btn-submit:hover { background: var(--yellow-dim); }
+
+    .contact-info { display: flex; flex-direction: column; gap: 20px; }
+    .info-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .info-card .info-icon { font-size: 28px; margin-bottom: 12px; }
+    .info-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--yellow); margin-bottom: 8px; }
+    .info-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+    .info-card a { color: var(--yellow); text-decoration: none; }
+    .info-card a:hover { text-decoration: underline; }
+
+    .faq-section { margin-top: 48px; }
+    .faq-section h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--yellow); margin-bottom: 24px; }
+    .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 12px; }
+    .faq-item h3 { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+    .faq-item p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    footer { background: var(--card); border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--yellow); text-decoration: none; }
+    .success-msg { display: none; background: #0f2d1a; border: 1px solid var(--green); color: var(--green); border-radius: 10px; padding: 14px; margin-top: 16px; font-size: 0.88rem; text-align: center; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">🚕 TaxiMeter Pro</a>
+  <ul>
+    <li><a href="/">GPS Calculator</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/contact.html" class="active">Contact</a></li>
+    <li><a href="/privacy.html">Privacy</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="icon">✉️</div>
+  <h1>Contact Us</h1>
+  <p>Have a question, feedback, or partnership idea? We'd love to hear from you. Our team usually responds within 24 hours.</p>
+</div>
+
+<div class="container">
+  <div class="contact-grid">
+
+    <!-- FORM -->
+    <div class="contact-form">
+      <h2>Send a Message</h2>
+
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="name" placeholder="John Smith" />
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <select id="subject">
+          <option value="">Select a topic…</option>
+          <option>General Feedback</option>
+          <option>Bug Report</option>
+          <option>Feature Request</option>
+          <option>Partnership / Advertising</option>
+          <option>Press Inquiry</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="message" placeholder="Tell us what's on your mind…"></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitForm()">Send Message 🚀</button>
+      <div class="success-msg" id="successMsg">✅ Thanks! We've received your message and will reply within 24 hours.</div>
+    </div>
+
+    <!-- INFO CARDS -->
+    <div class="contact-info">
+      <div class="info-card">
+        <div class="info-icon">📧</div>
+        <h3>Email Us Directly</h3>
+        <p>For direct inquiries, reach us at:<br/>
+        <a href="mailto:hello@taximeter.online">hello@taximeter.online</a></p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">⏱️</div>
+        <h3>Response Time</h3>
+        <p>We typically respond to all messages within <strong style="color:var(--text)">24–48 hours</strong> on business days. For urgent issues, please include "URGENT" in your subject line.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🌍</div>
+        <h3>We're Global</h3>
+        <p>TaxiMeter Pro is used in over 50 countries. We support queries in English. Our team is based in Sri Lanka 🇱🇰 and operates across time zones.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🤝</div>
+        <h3>Partnerships</h3>
+        <p>Interested in integrating TaxiMeter Pro into your taxi company or fleet management system? Email us at <a href="mailto:partners@taximeter.online">partners@taximeter.online</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Is TaxiMeter Pro completely free?</h3>
+      <p>Yes. TaxiMeter Pro is 100% free to use. There are no subscriptions, hidden fees, or premium tiers. The tool is supported by non-intrusive display advertising.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does the app store my GPS location data?</h3>
+      <p>No. Your GPS data is processed entirely within your browser. We never transmit, store, or sell your location data to any server or third party. Your ride remains completely private.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I use TaxiMeter Pro offline?</h3>
+      <p>The fare calculation and GPS tracking works as long as your device has GPS access. However, the map tiles (OpenStreetMap) do require an internet connection to display.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do I report a bug or inaccuracy?</h3>
+      <p>Use the contact form above and select "Bug Report" as the subject. Please describe the issue, your device type, and browser version so we can reproduce and fix it quickly.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I request support for my local currency?</h3>
+      <p>Absolutely. TaxiMeter Pro currently defaults to USD but you can enter any fare rates manually. We're working on a built-in currency selector — submit a feature request and we'll prioritize it.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 TaxiMeter Pro · <a href="/">Home</a> · <a href="/about.html">About</a> · <a href="/privacy.html">Privacy Policy</a> · <a href="/contact.html">Contact</a>
+  <br/><br/>Powered by OpenStreetMap &amp; Leaflet · GPS data stays on your device.
+</footer>
+
+<script>
+  function submitForm() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value.trim();
+    if (!name || !email || !subject || !message) {
+      alert('Please fill in all fields before submitting.');
+      return;
+    }
+    // In production: replace with your form backend (Formspree, EmailJS, etc.)
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('subject').value = '';
+    document.getElementById('message').value = '';
+  }
+</script>
+
+</body>
+</html>
