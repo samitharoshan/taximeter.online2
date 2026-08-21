@@ -55,7 +55,7 @@
   <!-- Leaflet JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel[...]
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -74,43 +74,39 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     /* ── NAV ── */
     nav {
       background: #0d1117;
       border-bottom: 1px solid var(--border);
-      padding: 12px 24px;
+      padding: 10px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.875rem;
+      font-size: 0.82rem;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 8px;
     }
 
     nav .nav-brand {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Syne', sans-serif;
       font-weight: 800;
       color: var(--yellow);
-      font-size: 1rem;
+      font-size: 0.95rem;
       text-decoration: none;
-      letter-spacing: -0.3px;
     }
 
     nav ul {
       list-style: none;
       display: flex;
-      gap: 24px;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
@@ -118,57 +114,53 @@
       color: var(--muted);
       text-decoration: none;
       transition: color 0.2s;
-      font-weight: 500;
-      font-size: 0.875rem;
     }
 
     nav ul li a:hover { color: var(--text); }
 
     /* ── HEADER ── */
     header {
-      padding: 20px 24px;
+      padding: 18px 24px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       border-bottom: 1px solid var(--border);
       background: var(--card);
     }
 
     .logo {
-      width: 44px; height: 44px;
+      width: 40px; height: 40px;
       background: var(--yellow);
-      border-radius: 12px;
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 24px;
-      box-shadow: 0 4px 12px rgba(245, 197, 24, 0.2);
+      font-size: 22px;
     }
 
     header h1 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
       font-weight: 800;
       color: var(--yellow);
-      letter-spacing: -0.8px;
+      letter-spacing: -0.5px;
     }
 
     header span {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--muted);
-      margin-left: 6px;
-      font-weight: 500;
+      margin-left: 4px;
+      font-weight: 300;
     }
 
     .status-pill {
       margin-left: auto;
-      padding: 8px 16px;
+      padding: 6px 14px;
       border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 0.78rem;
+      font-weight: 500;
       background: #21262d;
       color: var(--muted);
       border: 1px solid var(--border);
-      display: flex; align-items: center; gap: 8px;
-      letter-spacing: 0.3px;
+      display: flex; align-items: center; gap: 6px;
     }
 
     .status-pill .dot {
@@ -194,10 +186,10 @@
     .panel {
       background: var(--card);
       border-right: 1px solid var(--border);
-      padding: 24px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
       overflow-y: auto;
     }
 
@@ -205,7 +197,7 @@
       background: linear-gradient(135deg, #1a1d23, #21262d);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 32px 24px;
+      padding: 24px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -221,76 +213,69 @@
     }
 
     .fare-label {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--muted);
-      letter-spacing: 1.8px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 12px;
-      font-weight: 600;
+      margin-bottom: 8px;
     }
 
     .fare-amount {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 3.6rem;
-      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 800;
       color: var(--yellow);
       line-height: 1;
       transition: color 0.3s;
-      letter-spacing: -1px;
     }
 
     .fare-amount.pulse { animation: fareflash 0.3s ease; }
 
     @keyframes fareflash {
       0%,100% { opacity: 1; }
-      50% { opacity: 0.6; }
+      50% { opacity: 0.5; }
     }
 
-    .fare-currency { font-size: 1.5rem; vertical-align: super; margin-right: 6px; }
+    .fare-currency { font-size: 1.4rem; vertical-align: super; margin-right: 4px; }
 
     .stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
 
     .stat-card {
       background: #0d1117;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
-      transition: border-color 0.2s;
+      padding: 14px;
     }
 
-    .stat-card:hover { border-color: var(--yellow-dim); }
-
     .stat-card .s-label {
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      margin-bottom: 8px;
-      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
     }
 
     .stat-card .s-value {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.6rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
       font-weight: 700;
       color: var(--text);
-      letter-spacing: -0.5px;
     }
 
-    .stat-card .s-unit { font-size: 0.7rem; color: var(--muted); margin-left: 4px; font-weight: 600; }
+    .stat-card .s-unit { font-size: 0.75rem; color: var(--muted); margin-left: 3px; }
 
     .section-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 1.8px;
-      margin-bottom: 8px;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
     }
 
     .setting-row {
@@ -304,26 +289,22 @@
       gap: 10px;
     }
 
-    .setting-row label { font-size: 0.85rem; color: var(--muted); white-space: nowrap; font-weight: 500; }
+    .setting-row label { font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
 
     .setting-row input[type="number"] {
       background: #21262d;
       border: 1px solid var(--border);
       color: var(--text);
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 6px 10px;
       width: 90px;
       font-size: 0.9rem;
       text-align: right;
       outline: none;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
+      font-family: 'Syne', sans-serif;
     }
 
-    .setting-row input[type="number"]:focus { 
-      border-color: var(--yellow-dim);
-      box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.1);
-    }
+    .setting-row input[type="number"]:focus { border-color: var(--yellow-dim); }
 
     .btn-row { display: flex; gap: 10px; }
 
@@ -332,12 +313,12 @@
       padding: 14px;
       border: none;
       border-radius: 12px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Syne', sans-serif;
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
       transition: transform 0.1s, opacity 0.2s, box-shadow 0.2s;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
     }
 
     .btn:active { transform: scale(0.97); }
@@ -354,7 +335,7 @@
     .btn-stop {
       background: transparent;
       color: var(--red);
-      border: 1.5px solid var(--red);
+      border: 1px solid var(--red);
     }
 
     .btn-stop:hover { background: rgba(248,81,73,0.1); }
@@ -363,7 +344,7 @@
     .btn-reset {
       background: transparent;
       color: var(--muted);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       flex: 0 0 auto;
       padding: 14px 16px;
     }
@@ -374,9 +355,9 @@
       background: #0d1117;
       border: 1px dashed var(--border);
       border-radius: 12px;
-      padding: 18px;
+      padding: 16px;
       display: none;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
     }
 
     .receipt.show { display: block; }
@@ -384,20 +365,12 @@
     .receipt-row {
       display: flex;
       justify-content: space-between;
-      padding: 7px 0;
+      padding: 5px 0;
       border-bottom: 1px solid #21262d;
       color: var(--muted);
-      font-weight: 500;
     }
 
-    .receipt-row:last-child { 
-      border-bottom: none; 
-      font-weight: 700; 
-      color: var(--yellow); 
-      font-size: 1.1rem;
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: -0.5px;
-    }
+    .receipt-row:last-child { border-bottom: none; font-weight: 700; color: var(--yellow); font-size: 1rem; }
 
     /* MAP */
     #map { flex: 1; height: 100%; min-height: 400px; }
@@ -409,47 +382,42 @@
       background: #0d1117;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 0.7rem;
+      padding: 8px 12px;
+      font-size: 0.75rem;
       color: var(--muted);
       flex: 1;
       min-width: 80px;
       text-align: center;
-      font-weight: 600;
     }
 
     .gps-chip span {
       display: block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.95rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
       color: var(--text);
       font-weight: 700;
-      margin-top: 4px;
-      letter-spacing: -0.3px;
+      margin-top: 2px;
     }
 
     .map-badge {
       position: absolute;
       top: 16px; right: 16px;
       z-index: 1000;
-      background: rgba(13,17,23,0.95);
+      background: rgba(13,17,23,0.9);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
+      border-radius: 10px;
+      padding: 10px 14px;
       font-size: 0.75rem;
       color: var(--muted);
       backdrop-filter: blur(8px);
       pointer-events: none;
-      font-weight: 600;
     }
 
     .map-badge strong {
       display: block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.3rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
       color: var(--yellow);
-      font-weight: 700;
-      letter-spacing: -0.5px;
     }
 
     @keyframes ripple {
@@ -469,7 +437,7 @@
     .info-section {
       background: var(--card);
       border-top: 1px solid var(--border);
-      padding: 56px 24px;
+      padding: 48px 24px;
     }
 
     .info-section .container {
@@ -478,78 +446,64 @@
     }
 
     .info-section h2 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.75rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
       font-weight: 800;
       color: var(--yellow);
-      margin-bottom: 20px;
-      letter-spacing: -0.8px;
+      margin-bottom: 16px;
     }
 
     .info-section h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.15rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--text);
-      margin: 28px 0 12px;
-      letter-spacing: -0.3px;
+      margin: 24px 0 10px;
     }
 
     .info-section p {
       color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.8;
-      margin-bottom: 14px;
-      font-weight: 400;
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 12px;
     }
 
     .info-section ul {
       list-style: disc;
-      padding-left: 24px;
+      padding-left: 22px;
       color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.8;
-      margin-bottom: 14px;
-      font-weight: 400;
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 12px;
     }
 
-    .info-section ul li { margin-bottom: 8px; }
+    .info-section ul li { margin-bottom: 6px; }
 
     .info-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      margin-top: 28px;
+      gap: 20px;
+      margin-top: 24px;
     }
 
     .info-card {
       background: #0d1117;
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 24px;
-      transition: border-color 0.2s, transform 0.2s;
+      padding: 22px;
     }
 
-    .info-card:hover { border-color: var(--yellow-dim); transform: translateY(-2px); }
-
-    .info-card .ic-icon { font-size: 2.2rem; margin-bottom: 12px; }
+    .info-card .ic-icon { font-size: 2rem; margin-bottom: 10px; }
 
     .info-card h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.05rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text);
-      margin: 0 0 10px;
-      letter-spacing: -0.3px;
+      margin: 0 0 8px;
     }
 
-    .info-card p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.7;
-      margin: 0;
-      font-weight: 400;
-    }
+    .info-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; margin: 0; }
 
     /* ── PRIVACY POLICY ── */
     #privacy { background: #0d1117; }
@@ -563,41 +517,40 @@
     .footer-inner {
       max-width: 900px;
       margin: 0 auto;
-      padding: 40px 24px 24px;
+      padding: 36px 24px 20px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 40px;
     }
 
     .footer-col h4 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Syne', sans-serif;
       font-size: 0.85rem;
       font-weight: 800;
       color: var(--text);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
     }
 
     .footer-col p, .footer-col a {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: var(--muted);
-      line-height: 1.8;
+      line-height: 1.7;
       text-decoration: none;
       display: block;
-      font-weight: 500;
+      font-weight: 400;
     }
 
     .footer-col a:hover { color: var(--yellow); }
 
     .footer-bottom {
       border-top: 1px solid var(--border);
-      padding: 16px 24px;
+      padding: 14px 24px;
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--muted);
-      font-weight: 500;
-      letter-spacing: 0.3px;
+      font-weight: 400;
     }
 
     @media (max-width: 768px) {
@@ -733,24 +686,24 @@
   <div class="container">
     <h2>How TaxiMeter Pro Works</h2>
     <p>
-      TaxiMeter Pro is a free, browser-based GPS taxi fare calculator that uses your device's built-in location services to track your journey in real time. There is no app to download and no acc[...]
+      TaxiMeter Pro is a free, browser-based GPS taxi fare calculator that uses your device's built-in location services to track your journey in real time. There is no app to download and no account to create. Simply visit the website, enter your fare settings, and press Start.
     </p>
 
     <div class="info-grid">
       <div class="info-card">
         <div class="ic-icon">📍</div>
         <h3>Live GPS Tracking</h3>
-        <p>Your browser's Geolocation API provides real-time position updates. TaxiMeter Pro uses the Haversine formula to calculate the exact distance traveled between each GPS fix, filtering ou[...]
+        <p>Your browser's Geolocation API provides real-time position updates. TaxiMeter Pro uses the Haversine formula to calculate the exact distance traveled between each GPS fix, filtering out noise and outliers.</p>
       </div>
       <div class="info-card">
         <div class="ic-icon">🗺️</div>
         <h3>Interactive Map</h3>
-        <p>The map is powered by OpenStreetMap and the Leaflet.js library. Your route is drawn on the map as a live polyline so you can see exactly where you have traveled throughout the ride.</p[...]
+        <p>The map is powered by OpenStreetMap and the Leaflet.js library. Your route is drawn on the map as a live polyline so you can see exactly where you have traveled throughout the ride.</p>
       </div>
       <div class="info-card">
         <div class="ic-icon">💰</div>
         <h3>Customizable Fare Formula</h3>
-        <p>Set your own base fare, per-kilometer rate, and per-minute rate. The fare is recalculated every second and displayed in large, easy-to-read digits both on the panel and on the live map[...]
+        <p>Set your own base fare, per-kilometer rate, and per-minute rate. The fare is recalculated every second and displayed in large, easy-to-read digits both on the panel and on the live map badge.</p>
       </div>
       <div class="info-card">
         <div class="ic-icon">🧾</div>
@@ -765,13 +718,13 @@
       <div class="info-card">
         <div class="ic-icon">📱</div>
         <h3>Works on Any Device</h3>
-        <p>TaxiMeter Pro is fully responsive and works on smartphones, tablets, and desktops. Any modern browser with GPS support — Chrome, Firefox, Safari, or Edge — is supported out of the [...]
+        <p>TaxiMeter Pro is fully responsive and works on smartphones, tablets, and desktops. Any modern browser with GPS support — Chrome, Firefox, Safari, or Edge — is supported out of the box.</p>
       </div>
     </div>
 
     <h3>Step-by-Step Guide</h3>
     <ul>
-      <li><strong>Step 1 – Set your fare rates:</strong> Enter the base fare, price per kilometer, and price per minute in the Fare Settings panel on the left. These values match your local tax[...]
+      <li><strong>Step 1 – Set your fare rates:</strong> Enter the base fare, price per kilometer, and price per minute in the Fare Settings panel on the left. These values match your local taxi rates.</li>
       <li><strong>Step 2 – Allow location access:</strong> When prompted by your browser, click "Allow" to grant the page access to your GPS signal.</li>
       <li><strong>Step 3 – Press Start Ride:</strong> The meter begins immediately. Distance and time accumulate, and the fare updates every second.</li>
       <li><strong>Step 4 – Press Stop:</strong> When the trip ends, press Stop. A full receipt is displayed with a line-by-line breakdown of your fare.</li>
@@ -784,7 +737,7 @@
       <strong>Total Fare = Base Fare + (Distance in km × Rate per km) + (Duration in minutes × Rate per minute)</strong>
     </p>
     <p>
-      This formula mirrors the metering logic used by most licensed taxi companies worldwide, making TaxiMeter Pro suitable for drivers, passengers, and fleet operators who need a transparent, ve[...]
+      This formula mirrors the metering logic used by most licensed taxi companies worldwide, making TaxiMeter Pro suitable for drivers, passengers, and fleet operators who need a transparent, verifiable fare calculation tool.
     </p>
   </div>
 </section>
@@ -796,13 +749,13 @@
   <div class="container">
     <h2>About TaxiMeter Pro</h2>
     <p>
-      TaxiMeter Pro was built to give passengers, independent drivers, and small taxi operators a free, reliable, and transparent fare calculation tool that works without any subscription, regist[...]
+      TaxiMeter Pro was built to give passengers, independent drivers, and small taxi operators a free, reliable, and transparent fare calculation tool that works without any subscription, registration, or data collection.
     </p>
     <p>
-      Taxi and rideshare passengers often wonder whether the fare on the meter matches the actual distance traveled. TaxiMeter Pro solves this problem by giving passengers an independent, GPS-ver[...]
+      Taxi and rideshare passengers often wonder whether the fare on the meter matches the actual distance traveled. TaxiMeter Pro solves this problem by giving passengers an independent, GPS-verified fare estimate they can verify in real time.
     </p>
     <p>
-      Taxi drivers and operators can use TaxiMeter Pro as a backup meter, a training tool for new drivers, or a simple way to provide a digital receipt to passengers. The customizable fare settin[...]
+      Taxi drivers and operators can use TaxiMeter Pro as a backup meter, a training tool for new drivers, or a simple way to provide a digital receipt to passengers. The customizable fare settings support any currency and pricing model used by taxi services worldwide.
     </p>
 
     <h3>Technology Used</h3>
@@ -822,13 +775,13 @@
     <p>No. GPS data is processed entirely inside your browser and is never transmitted to any server. When you close the tab, all data is discarded.</p>
 
     <h3>How accurate is the GPS distance measurement?</h3>
-    <p>Accuracy depends on your device's GPS hardware and signal quality. TaxiMeter Pro filters out GPS position jumps smaller than 5 meters to reduce the effect of GPS noise. In open-sky conditi[...]
+    <p>Accuracy depends on your device's GPS hardware and signal quality. TaxiMeter Pro filters out GPS position jumps smaller than 5 meters to reduce the effect of GPS noise. In open-sky conditions (like driving in a city), accuracy is typically within 5–10 meters.</p>
 
     <h3>Can I use it on an iPhone?</h3>
     <p>Yes. TaxiMeter Pro works on Safari on iOS. Make sure location access is enabled for your browser in your iPhone's Settings app under Privacy &amp; Security → Location Services.</p>
 
     <h3>What currency does TaxiMeter Pro use?</h3>
-    <p>The fare is displayed in whatever currency you enter in the settings. The dollar sign ($) is used as a generic symbol — you can treat it as representing your local currency (rupee, euro,[...]
+    <p>The fare is displayed in whatever currency you enter in the settings. The dollar sign ($) is used as a generic symbol — you can treat it as representing your local currency (rupee, euro, pound, etc.).</p>
   </div>
 </section>
 
@@ -841,22 +794,22 @@
     <p><em>Last updated: March 2025</em></p>
 
     <p>
-      TaxiMeter Pro ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains how we handle information when you use our website at taximeterpro.com (the "Service"[...]
+      TaxiMeter Pro ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains how we handle information when you use our website at taximeterpro.com (the "Service").
     </p>
 
     <h3>Information We Do Not Collect</h3>
     <p>
-      TaxiMeter Pro does not collect, store, or transmit your GPS location data. All geolocation data requested by the app is processed locally in your browser and is discarded when you close or [...]
+      TaxiMeter Pro does not collect, store, or transmit your GPS location data. All geolocation data requested by the app is processed locally in your browser and is discarded when you close or refresh the page.
     </p>
 
     <h3>Information We May Collect Automatically</h3>
     <p>
-      Like most websites, our server may automatically log standard technical information when you visit, including your IP address, browser type, operating system, the pages you visit, and the t[...]
+      Like most websites, our server may automatically log standard technical information when you visit, including your IP address, browser type, operating system, the pages you visit, and the time you spend on them. This data helps us understand how TaxiMeter Pro is used and allows us to identify and fix technical issues.
     </p>
 
     <h3>Cookies</h3>
     <p>
-      TaxiMeter Pro itself does not set any cookies. However, third-party services embedded in this website — including OpenStreetMap tile servers — may set cookies on your device according t[...]
+      TaxiMeter Pro itself does not set any cookies. However, third-party services embedded in this website — including OpenStreetMap tile servers — may set cookies on your device according to their own privacy policies. Please review:
     </p>
     <ul>
       <li><a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer" style="color:var(--yellow)">OpenStreetMap Privacy Policy</a></li>
@@ -864,17 +817,17 @@
 
     <h3>Third-Party Links</h3>
     <p>
-      Our website may contain links to external websites. We are not responsible for the privacy practices or content of those sites. We encourage you to read the privacy policy of any external s[...]
+      Our website may contain links to external websites. We are not responsible for the privacy practices or content of those sites. We encourage you to read the privacy policy of any external site before providing personal information.
     </p>
 
     <h3>Children's Privacy</h3>
     <p>
-      TaxiMeter Pro is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal informat[...]
+      TaxiMeter Pro is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information to us, please contact us immediately.
     </p>
 
     <h3>Changes to This Policy</h3>
     <p>
-      We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date. Continued use of the Service after any changes constitutes your[...]
+      We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date. Continued use of the Service after any changes constitutes your acceptance of the revised Privacy Policy.
     </p>
 
     <h3 id="contact">Contact Us</h3>
@@ -925,7 +878,6 @@
   let lastPos = null;
   let routePoints = [];
   let elapsedSeconds = 0;
-  let hasSetCenter = false; // Track if we've centered the map once
 
   // ── Map Init ──────────────────────────────────────────────────────────
   map = L.map('map', { zoomControl: true }).setView([7.2906, 80.6337], 13);
@@ -990,7 +942,6 @@
     lastPos = null;
     routePoints = [];
     elapsedSeconds = 0;
-    hasSetCenter = false; // Reset center flag when starting
     if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
     document.getElementById('btnStart').disabled = true;
     document.getElementById('btnStop').disabled = false;
