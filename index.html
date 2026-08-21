@@ -942,53 +942,6 @@
     className: ''
   });
 
-  // ── Auto-detect device location on page load ──────────────────────────────────────
-  function detectDeviceLocation() {
-    if (!navigator.geolocation) {
-      console.warn('Geolocation not supported');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        const accuracy = position.coords.accuracy;
-
-        // Update GPS display
-        document.getElementById('latDisplay').textContent = lat.toFixed(6);
-        document.getElementById('lngDisplay').textContent = lng.toFixed(6);
-        document.getElementById('accDisplay').innerHTML = Math.round(accuracy) + '<span class="s-unit">m</span>';
-
-        // Center map on device location
-        map.setView([lat, lng], 16);
-
-        // Add marker for device location
-        if (marker) map.removeLayer(marker);
-        marker = L.marker([lat, lng], { icon: taxiIcon }).addTo(map);
-
-        // Add accuracy circle
-        if (accuracyCircle) map.removeLayer(accuracyCircle);
-        accuracyCircle = L.circle([lat, lng], {
-          radius: accuracy,
-          color: 'rgba(245, 197, 24, 0.3)',
-          fillColor: 'rgba(245, 197, 24, 0.1)',
-          weight: 1,
-          opacity: 0.5
-        }).addTo(map);
-
-        lastPos = { lat, lng };
-      },
-      (error) => {
-        console.warn('Geolocation error:', error.message);
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    );
-  }
-
-  // Call on page load
-  window.addEventListener('load', detectDeviceLocation);
-
   // ── Helpers ──────────────────────────────────────────────────────────
   function haversine(lat1, lon1, lat2, lon2) {
     const R = 6371;
@@ -1154,9 +1107,6 @@
     document.getElementById('latDisplay').textContent = '--';
     document.getElementById('lngDisplay').textContent = '--';
     document.getElementById('accDisplay').innerHTML = '--<span class="s-unit">m</span>';
-
-    // Re-detect device location after reset
-    detectDeviceLocation();
   }
 
   // Style for bounce animation
